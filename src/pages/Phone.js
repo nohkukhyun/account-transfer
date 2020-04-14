@@ -1,7 +1,8 @@
 import React from "react"
+import PhoneNumberInput from "../components/PhoneNumberInput/PhoneNumberInput"
 
-const Phone = () => {
-  return <div>Phone Page</div>
+const Phone = ({ history, match }) => {
+  return <PhoneNumberInput history={history} match={match} />
 }
 
 export default Phone

@@ -12,10 +12,24 @@ const Title = styled.h3`
   color: #333;
 `
 
-function Header() {
+function Header({ history }) {
+  const currentPage = () => {
+    let page = window.location.pathname
+    console.log(page)
+    let names = ""
+    if (page === "/") {
+      names = "계좌입력"
+    } else if (page === "/phone") {
+      names = "전화인증"
+    }
+    return names
+  }
+
+  console.log("header", history)
+
   return (
     <HeaderWrap>
-      <Title>계좌입력</Title>
+      <Title>{currentPage()}</Title>
     </HeaderWrap>
   )
 }

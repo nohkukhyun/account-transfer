@@ -14,10 +14,11 @@ const ApiCall = () => {
     }
   }, [])
 
-  const postApi = useCallback(async (url) => {
+  const postApi = useCallback(async (url, data) => {
     try {
-      const res = await axios.post(url)
-      // console.log(res)
+      const header = { headers: { "Content-Type": "application/json" } }
+      const res = await axios.post(url, data, header)
+      console.log("postApi", { res, data })
       return res.data
     } catch (error) {
       console.log(error)
