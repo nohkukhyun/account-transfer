@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const PhoneWrap = styled.div`
   width: 100%;
   position: relative;
   height: calc(100% - 50px);
-`;
+`
 
 const Header = styled.div`
   width: 100%;
@@ -16,14 +16,14 @@ const Header = styled.div`
   position: relative;
   height: 50px;
   line-height: 50px;
-`;
+`
 
 const Back = styled.div`
   position: absolute;
   left: 15px;
   color: #333;
   cursor: pointer;
-`;
+`
 
 const PhoneWrapBody = styled.div`
   padding: 20px;
@@ -32,12 +32,12 @@ const PhoneWrapBody = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-`;
+`
 
 const Title = styled.p`
   font-size: 13px;
   color: #666;
-`;
+`
 
 const FormInput = styled.input`
   border-radius: 5px;
@@ -46,7 +46,7 @@ const FormInput = styled.input`
   display: block;
   width: 100%;
   padding: 10px 0;
-`;
+`
 
 const Button = styled.button`
   width: 100%;
@@ -57,19 +57,19 @@ const Button = styled.button`
   &.loading {
     border: 1px solid red;
   }
-`;
+`
 
 function PhoneConfirmComponent({
   handleBack,
   handleChange,
   tel,
-  msg,
-  verification,
+  error,
+  code,
   handleSubmit,
   confirmNumber,
   loading,
 }) {
-  console.log({ verification });
+  // console.log({ verification });
   return (
     <PhoneWrap>
       <Header>
@@ -83,30 +83,27 @@ function PhoneConfirmComponent({
           <span
             style={{ color: "#c70039", textAlign: "center:", fontSize: "10px" }}
           >
-            {msg}
+            {error}
           </span>
-          {verification && (
+          {code && (
             <div style={{ marginTop: "20px" }}>
-              {verification && (
-                <FormInput
-                  value={verification}
-                  onChange={handleChange}
-                  name="code"
-                />
+              {code && (
+                <FormInput value={code} onChange={handleChange} name="code" />
               )}
             </div>
           )}
           <Button
             type="submit"
-            onClick={() => (!verification ? handleSubmit() : confirmNumber())}
+            onClick={() => (!code ? handleSubmit() : confirmNumber())}
             className={loading && "loading"}
+            disabled={loading}
           >
-            {!verification ? "전화번호인증" : "인증하기"}
+            {!loading ? (!code ? "전화번호인증" : "인증하기") : "Loading..."}
           </Button>
         </div>
       </PhoneWrapBody>
     </PhoneWrap>
-  );
+  )
 }
 
-export default PhoneConfirmComponent;
+export default PhoneConfirmComponent
