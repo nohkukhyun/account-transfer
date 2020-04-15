@@ -3,7 +3,7 @@ import ApiCall from "../api/ApiCall";
 import AccountInputComponent from "../components/accountInputcomponent/AccountInputComponent";
 
 function AccountInput({ history }) {
-  const [bankNum, setBankNum] = useState(null);
+  const [bankNum, setBankNum] = useState("");
   const [bankList, setBankList] = useState([]);
   const [keyCode, setKeyCode] = useState(0);
   const { getApi } = ApiCall();

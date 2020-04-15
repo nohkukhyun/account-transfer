@@ -3,7 +3,7 @@ import ApiCall from "../api/ApiCall";
 import PhoneComponent from "../components/PhoneConfirmComponent";
 
 function PhoneConfirm({ history, match }) {
-  const [tel, setTel] = useState(null);
+  const [tel, setTel] = useState("");
   const [msg, setMsg] = useState("");
   const [verification, setVerification] = useState(null);
   const [loading, setLoading] = useState(false);
