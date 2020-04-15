@@ -5,7 +5,7 @@ import AccountInputComponent from "../components/accountInputcomponent/AccountIn
 function AccountInput({ history }) {
   const [bankNum, setBankNum] = useState("");
   const [bankList, setBankList] = useState([]);
-  const [keyCode, setKeyCode] = useState(0);
+  // const [keyCode, setKeyCode] = useState(0);
   const { getApi } = ApiCall();
 
   const handleChange = (e) => {
@@ -19,16 +19,16 @@ function AccountInput({ history }) {
     }
   };
 
-  const handleNumChk = (e) => {
-    let keyVal = e.keyCode;
-    setKeyCode(keyVal);
+  // const handleNumChk = (e) => {
+  //   let keyVal = e.keyCode;
+  //   setKeyCode(keyVal);
 
-    if (keyVal >= 48 && keyVal <= 57) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  //   if (keyVal >= 48 && keyVal <= 57) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   const handleReset = () => {
     setBankNum("");
@@ -75,7 +75,6 @@ function AccountInput({ history }) {
       banks={banks}
       bankNum={bankNum}
       goPhonePage={goPhonePage}
-      handleNumChk={handleNumChk}
       handleReset={handleReset}
       handleChange={handleChange}
     />

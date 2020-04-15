@@ -69,7 +69,7 @@ function PhoneConfirmComponent({
   confirmNumber,
   loading,
 }) {
-  // console.log("!!his", handleSubmit.getVeri)
+  console.log({ verification });
   return (
     <PhoneWrap>
       <Header>
@@ -79,7 +79,7 @@ function PhoneConfirmComponent({
       <PhoneWrapBody>
         <div style={{ padding: "20px" }}>
           <Title>전화번호 입력</Title>
-          <FormInput value={tel} onChange={handleChange} />
+          <FormInput value={tel} onChange={handleChange} name="phone" />
           <span
             style={{ color: "#c70039", textAlign: "center:", fontSize: "10px" }}
           >
@@ -87,7 +87,13 @@ function PhoneConfirmComponent({
           </span>
           {verification && (
             <div style={{ marginTop: "20px" }}>
-              {verification && <FormInput value={verification} />}
+              {verification && (
+                <FormInput
+                  value={verification}
+                  onChange={handleChange}
+                  name="code"
+                />
+              )}
             </div>
           )}
           <Button

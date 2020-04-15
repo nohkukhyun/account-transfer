@@ -11,7 +11,12 @@ function PhoneConfirm({ history, match }) {
 
   const handleChange = (e) => {
     let val = e.target.value;
-    setTel(val);
+    let name = e.target.name;
+    if (name === "phone") {
+      setTel(val);
+    } else {
+      setVerification(val);
+    }
     if (val.length === "") {
       setMsg("전화번호를 입력해주세요");
     }
@@ -37,7 +42,6 @@ function PhoneConfirm({ history, match }) {
       setMsg("전화번호를 제대로 입력해주세요.");
     }
 
-    console.log({ verificationData });
     if (verificationData.success) {
       setVerification(verificationData.verification);
     } else {
@@ -48,10 +52,19 @@ function PhoneConfirm({ history, match }) {
   const confirmNumber = async () => {
     console.log("succes confirmNumber", verification);
     console.log("Loading...");
+
     setLoading(true);
     const cData = await getApi(
       `https://fe-account-api.herokuapp.com/api/v1/verification?code=${verification}`
     );
+    let cnt = 0;
+    if (cData.success === false) {
+      cnt++;
+      if (cnt === 3) {
+        return history.push("/");
+      }
+      console.log({ cnt });
+    }
     setLoading(false);
     console.log("cData", { cData });
     return cData;
@@ -62,6 +75,7 @@ function PhoneConfirm({ history, match }) {
       handleBack={handleBack}
       handleSubmit={handleSubmit}
       confirmNumber={confirmNumber}
+      verification={verification}
       tel={tel}
       msg={msg}
       loading={loading}
