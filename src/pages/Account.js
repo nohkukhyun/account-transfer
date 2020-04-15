@@ -1,8 +1,8 @@
-import React from "react"
-import BankNumberInput from "../components/BankNumberInput/BankNumberInput"
+import React from "react";
+import AccountInput from "../containers/AccountInput";
 
 const Account = ({ history }) => {
-  return <BankNumberInput history={history} />
-}
+  return <AccountInput history={history} />;
+};
 
-export default Account
+export default Account;

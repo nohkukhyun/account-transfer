@@ -1,12 +1,11 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import ApiCall from "../../api/ApiCall"
+import React from "react";
+import styled from "styled-components";
 
 const PhoneWrap = styled.div`
   width: 100%;
   position: relative;
   height: calc(100% - 50px);
-`
+`;
 
 const Header = styled.div`
   width: 100%;
@@ -17,14 +16,14 @@ const Header = styled.div`
   position: relative;
   height: 50px;
   line-height: 50px;
-`
+`;
 
 const Back = styled.div`
   position: absolute;
   left: 15px;
   color: #333;
   cursor: pointer;
-`
+`;
 
 const PhoneWrapBody = styled.div`
   padding: 20px;
@@ -33,12 +32,12 @@ const PhoneWrapBody = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-`
+`;
 
 const Title = styled.p`
   font-size: 13px;
   color: #666;
-`
+`;
 
 const FormInput = styled.input`
   border-radius: 5px;
@@ -47,7 +46,7 @@ const FormInput = styled.input`
   display: block;
   width: 100%;
   padding: 10px 0;
-`
+`;
 
 const Button = styled.button`
   width: 100%;
@@ -55,59 +54,21 @@ const Button = styled.button`
   border-radius: 10px;
   border: 1px solid #666;
   margin-top: 40px;
-`
-
-function PhoneNumberInput({ history, match }) {
-  const [tel, setTel] = useState(null)
-  const [msg, setMsg] = useState("")
-  const [verification, setVerification] = useState(null)
-  const { getApi, postApi } = ApiCall()
-
-  const handleChange = (e) => {
-    let val = e.target.value
-    setTel(val)
-    if (val.length === "") {
-      setMsg("전화번호를 입력해주세요")
-    }
-    if (val.length > 12) {
-      return false
-    }
+  &.loading {
+    border: 1px solid red;
   }
+`;
 
-  const handleBack = () => {
-    return history.push("/")
-  }
-
-  const handleSubmit = async () => {
-    const { params } = match
-    let verificationData = {}
-
-    if (tel && tel.length >= 10) {
-      verificationData = await postApi(
-        `https://fe-account-api.herokuapp.com/api/v1/account`,
-        params
-      )
-    } else {
-      setMsg("전화번호를 제대로 입력해주세요.")
-    }
-
-    console.log({ verificationData })
-    if (verificationData.success) {
-      setVerification(verificationData.verification)
-    } else {
-      alert("인증을 다시 해주세요.")
-    }
-
-    const getVeri = async () => {
-      console.log("getVeri!!!")
-      return await getApi(
-        `https://fe-account-api.herokuapp.com/api/v1/verification?code=${verification}`
-      )
-    }
-
-    return { getVeri }
-  }
-
+function PhoneConfirmComponent({
+  handleBack,
+  handleChange,
+  tel,
+  msg,
+  verification,
+  handleSubmit,
+  confirmNumber,
+  loading,
+}) {
   // console.log("!!his", handleSubmit.getVeri)
   return (
     <PhoneWrap>
@@ -131,16 +92,15 @@ function PhoneNumberInput({ history, match }) {
           )}
           <Button
             type="submit"
-            onClick={() =>
-              !verification ? handleSubmit() : handleSubmit.getVeri()
-            }
+            onClick={() => (!verification ? handleSubmit() : confirmNumber())}
+            className={loading && "loading"}
           >
             {!verification ? "전화번호인증" : "인증하기"}
           </Button>
         </div>
       </PhoneWrapBody>
     </PhoneWrap>
-  )
+  );
 }
 
-export default PhoneNumberInput
+export default PhoneConfirmComponent;

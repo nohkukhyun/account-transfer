@@ -1,8 +1,8 @@
-import React from "react"
-import PhoneNumberInput from "../components/PhoneNumberInput/PhoneNumberInput"
+import React from "react";
+import PhoneConfirm from "../containers/PhoneConfirm";
 
 const Phone = ({ history, match }) => {
-  return <PhoneNumberInput history={history} match={match} />
-}
+  return <PhoneConfirm history={history} match={match} />;
+};
 
-export default Phone
+export default Phone;
