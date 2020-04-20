@@ -7,7 +7,7 @@ const ApiCall = () => {
   const getApi = useCallback(async (url) => {
     try {
       const res = await axios.get(url, config)
-      console.log("res!!!!", res.data)
+      // console.log("res!!!!", res.data)
       return res.data
     } catch (error) {
       console.log(error)

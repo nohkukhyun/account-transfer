@@ -1,20 +1,21 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useContext } from "react"
+import styled from "styled-components"
+import LoadingContext from "../../context/LoadingContext"
 
 const BankWrap = styled.div`
   width: 100%;
   position: relative;
-`;
+`
 
 const BankWrapBody = styled.div`
   padding: 20px;
   width: 100%;
-`;
+`
 
 const Title = styled.p`
   font-size: 13px;
   color: #333;
-`;
+`
 
 const ControlInput = styled.input`
   border: 1px solid #efefef;
@@ -23,13 +24,13 @@ const ControlInput = styled.input`
   width: 90%;
   padding: 10px 0;
   position: relative;
-`;
+`
 
 const Svg = styled.svg`
   position: absolute;
   right: 25px;
   top: 128px;
-`;
+`
 
 const BankList = styled.div`
   width: 100%;
@@ -48,7 +49,7 @@ const BankList = styled.div`
       cursor: pointer;
     }
   }
-`;
+`
 const Header = styled.div`
   width: 100%;
   text-align: center;
@@ -56,7 +57,7 @@ const Header = styled.div`
   color: #666;
   border-bottom: 1px solid #999;
   padding: 15px 0;
-`;
+`
 
 function AccountInputComponent({
   bankNum,
@@ -65,7 +66,21 @@ function AccountInputComponent({
   handleReset,
   goPhonePage,
 }) {
-  return (
+  const loading = useContext(LoadingContext)
+
+  const LoadingWrap = () => {
+    if (banks && banks.length <= 0) {
+      loading.status = true
+    } else {
+      loading.status = false
+    }
+  }
+
+  useEffect(() => {})
+
+  return banks && banks.length <= 0 ? (
+    <div>Loading...</div>
+  ) : (
     <BankWrap>
       <Header>계좌입력</Header>
       <BankWrapBody>
@@ -95,13 +110,13 @@ function AccountInputComponent({
                   <li key={i} onClick={() => goPhonePage(data.name, data.code)}>
                     {data.name}
                   </li>
-                );
+                )
               })}
           </ul>
         </BankList>
       </BankWrapBody>
     </BankWrap>
-  );
+  )
 }
 
-export default AccountInputComponent;
+export default AccountInputComponent

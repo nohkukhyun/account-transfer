@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useContext } from "react"
+import LoadingContext from "../../context/LoadingContext"
 import styled from "styled-components"
 
 const PhoneWrap = styled.div`
@@ -69,7 +70,6 @@ function PhoneConfirmComponent({
   confirmNumber,
   loading,
 }) {
-  // console.log({ verification });
   return (
     <PhoneWrap>
       <Header>

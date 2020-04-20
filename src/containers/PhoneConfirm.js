@@ -1,15 +1,17 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import ApiCall from "../api/ApiCall"
 import PhoneComponent from "../components/PhoneConfirmComponent"
+import LoadingContext from "../context/LoadingContext"
 
 function PhoneConfirm({ history, match }) {
   const [tel, setTel] = useState("")
   const [error, setError] = useState("")
   const [code, setCode] = useState(null)
   const [cnt, setCnt] = useState(1)
-  const [loading, setLoading] = useState(false)
 
   const { getApi, postApi } = ApiCall()
+
+  const loadingCtx = useContext(LoadingContext)
 
   const handleChange = (e) => {
     let val = e.target.value
@@ -21,9 +23,6 @@ function PhoneConfirm({ history, match }) {
     }
     if (val.length === "") {
       setError("전화번호를 입력해주세요")
-    }
-    if (val.length > 12) {
-      return false
     }
   }
 
@@ -53,7 +52,7 @@ function PhoneConfirm({ history, match }) {
   }
 
   const confirmNumber = async () => {
-    setLoading(true)
+    loadingCtx.status = true
     console.log("code!!!", { code })
     const cData = await getApi(
       `https://fe-account-api.herokuapp.com/api/v1/verification?code=${code}`
@@ -70,8 +69,9 @@ function PhoneConfirm({ history, match }) {
         return history.push("/")
       }
     }
-    setLoading(false)
+    loadingCtx.status = false
   }
+
   return (
     <PhoneComponent
       handleChange={handleChange}
@@ -81,7 +81,8 @@ function PhoneConfirm({ history, match }) {
       code={code}
       tel={tel}
       error={error}
-      loading={loading}
+      // loading={loading}
+      loadingCtx={loadingCtx}
     />
   )
 }
